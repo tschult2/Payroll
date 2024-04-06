@@ -30,12 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $_SESSION['userid'] = $row['userID'];
         $_SESSION["username"] = $username;
+        $_SESSION["firstName"] = $row['firstName'];
 
         header("location:employee.php");
     } elseif ($row["usertype"] == "admin") {
 
-        $_SESSION["username"] = $username;
         $_SESSION['userid'] = $row['userID'];
+        $_SESSION["username"] = $username;
+        $_SESSION["firstName"] = $row['firstName'];
 
         header("location:employee.php");
     } else {

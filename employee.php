@@ -45,29 +45,13 @@ if (!isset($_SESSION["username"])) {
 
 <?php include 'header.php';
 require 'DBConnect.php';
-$name = '';
-$sql = "SELECT * FROM user WHERE username = ?";
-try {
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s", $_SESSION["username"]);
-  $stmt->execute();
-  $result = $stmt->get_result();
-} catch (Exception $ex) {
-  echo $ex->getMessage;
-  $conn->close();
-  exit;
-}
-
-if (!empty($result) && $result->num_rows > 0) {
-  $row = $result->fetch_assoc();
-  $name = $row['firstName'];
-}
+$firstName = $_SESSION["firstName"];
   
 
-echo '<h2>Welcome ' . $name . '</h2>'; ?>
+echo '<h2>Welcome ' . $firstName . '</h2>'; ?>
         
 
-        <form action="submit-hours.php">
+        <form>
             <table>
                 <thead>
                     <tr>
@@ -81,16 +65,11 @@ echo '<h2>Welcome ' . $name . '</h2>'; ?>
                     <!-- Timesheet rows will be dynamically added here -->
                 </tbody>
             </table>
-            <div class="text-center pt-4">
-            <button class="btn btn-outline-dark">Submit</button>
+            <div class="text-center pt-4 pb-4">
+            <button class="btn btn-outline-dark" formaction="submit-hours.php">Submit</button>
+            <button class="btn btn-outline-dark" formaction="logout.php">Logout</button>
             </div>
         </form>
-
-<div class="text-center pt-4 pb-4">
-    <a href = "logout.php">
-    <button class="btn btn-outline-dark">Logout</button>
-    </a>
-</div>
 
 <script>
   // Function to add rows dynamically for each day of the current week (Monday to Friday)
@@ -111,7 +90,7 @@ echo '<h2>Welcome ' . $name . '</h2>'; ?>
         <tr>
           <td>${dayOfWeek}</td>
           <td><input type="text" name="date[]" value="${dateString}" readonly></td>
-          <td><input type="number" min="0" name = "hours[]" placeholder="0"></td>
+          <td><input type="number" min="0" max="24" name = "hours[]" placeholder="0"></td>
           <td><input type="text" name = "tasks[]" placeholder="Enter tasks"></td>
         </tr>
       `;
