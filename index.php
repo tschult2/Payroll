@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["username"] = $username;
         $_SESSION["firstName"] = $row['firstName'];
 
-        header("location:employee.php");
+        header("location:adminpage.php");
     } else {
 
         echo "username or password is incorrect";
