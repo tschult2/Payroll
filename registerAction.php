@@ -8,7 +8,7 @@ $email = $_GET['email'];
 $phonenumber = $_GET['phonenumber'];
 $usertype = $_GET['usertype'];
 
-$sql = "insert into user values (0, '$firstname', '$lastname', '$username', '$password', '$email', '$phonenumber', '$usertype')";
+$sql = "insert into user values (0, '$firstname', '$lastname', '$username', '$password', '$email', '$phonenumber', '$usertype', 0)";
 
 require 'DBConnect.php';
 
@@ -20,6 +20,6 @@ try {
 }
 $conn->close();
 
-echo "<h2>Returning to Admin Page</h2>";
-header("refresh:2;url=adminpage.php");
+echo "<h2>Returning to Register Employee Page</h2>";
+header("refresh:2;url=registerForm.php");
 ?>
