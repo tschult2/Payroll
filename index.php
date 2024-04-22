@@ -7,6 +7,11 @@ $db = "Payroll";
 
 session_start();
 
+if (isset($_SESSION["username"])) {
+
+    header("location:employee.php");
+}
+
 $data = mysqli_connect($host, $user, $password, $db);
 
 if ($data === false) {
@@ -20,29 +25,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $password = $_POST["password"];
 
-    $sql = "select * from user where username='" . $username . "' AND password='" . $password . "' ";
+    if (strpos($username, "'") == FALSE) {
+        $sql = "select * from user where username='" . $username . "' AND password='" . $password . "' ";
 
-    $result = mysqli_query($data, $sql);
+        $result = mysqli_query($data, $sql);
 
-    $row = mysqli_fetch_array($result);
+        $row = mysqli_fetch_array($result);
 
-    if ($row["usertype"] == "employee") {
+        if ($row["usertype"] == "employee") {
 
-        $_SESSION['userid'] = $row['userID'];
-        $_SESSION["username"] = $username;
-        $_SESSION["firstName"] = $row['firstName'];
+            $_SESSION['userid'] = $row['userID'];
+            $_SESSION["username"] = $username;
+            $_SESSION["firstName"] = $row['firstName'];
+            $_SESSION["lastName"] = $row['lastName'];
+            $_SESSION["email"] = $row['email'];
 
-        header("location:employee.php");
-    } elseif ($row["usertype"] == "admin") {
+            header("location:employee.php");
+        } elseif ($row["usertype"] == "admin") {
 
-        $_SESSION['userid'] = $row['userID'];
-        $_SESSION["username"] = $username;
-        $_SESSION["firstName"] = $row['firstName'];
+            $_SESSION['userid'] = $row['userID'];
+            $_SESSION["username"] = $username;
+            $_SESSION["firstName"] = $row['firstName'];
+            $_SESSION["lastName"] = $row['lastName'];
+            $_SESSION["email"] = $row['email'];
 
-        header("location:adminpage.php");
-    } else {
+            header("location:employee.php");
+        } else {
 
-        echo "username or password is incorrect";
+            echo "username or password is incorrect";
+        }
     }
 }
 ?>
