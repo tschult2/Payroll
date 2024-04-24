@@ -3,7 +3,9 @@
 $firstname = $_GET['firstname'];
 $lastname = $_GET['lastname'];
 $username = $_GET['username'];
-$password = $_GET['password'];
+
+$password = password_hash($_GET['password'], PASSWORD_DEFAULT);
+
 $email = $_GET['email'];
 $phonenumber = $_GET['phonenumber'];
 $usertype = $_GET['usertype'];
